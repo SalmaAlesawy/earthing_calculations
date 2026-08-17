@@ -1,9 +1,13 @@
 import 'package:earthing_calc/core/routes/app_router.dart';
 import 'package:earthing_calc/core/routes/page_route_names.dart';
 import 'package:earthing_calc/core/theme/theme_manager.dart';
+import 'package:earthing_calc/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 

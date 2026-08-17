@@ -6,6 +6,8 @@ import 'package:earthing_calc/features/authentication/register_feature/register_
 import 'package:earthing_calc/features/navigation/navigation_view/navigation_view.dart';
 import 'package:earthing_calc/features/navigation/navigation_view_model/navigation_cubit.dart';
 import 'package:earthing_calc/features/onboarding_feature/onboarding_view.dart';
+import 'package:earthing_calc/features/tests_features/new_soil_test_feature/new_soil_test_view/new_soil_test_view.dart';
+import 'package:earthing_calc/features/tests_features/new_soil_test_feature/new_soil_test_view_model/new_soil_test_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,29 +21,34 @@ abstract class AppRouter {
         );
       case PageRouteNames.loginScreen:
         return MaterialPageRoute(
-          builder: (context) =>
-              BlocProvider(
-                create: (context) => LoginCubit(),
-                child: LoginView(),
-              ),
+          builder: (context) => BlocProvider(
+            create: (context) => LoginCubit(),
+            child: LoginView(),
+          ),
           settings: setting,
         );
       case PageRouteNames.registerScreen:
         return MaterialPageRoute(
-          builder: (context) =>
-              BlocProvider(
-                create: (context) => RegisterCubit(),
-                child: RegisterView(),
-              ),
+          builder: (context) => BlocProvider(
+            create: (context) => RegisterCubit(),
+            child: RegisterView(),
+          ),
           settings: setting,
         );
       case PageRouteNames.navigationScreen:
         return MaterialPageRoute(
-          builder: (context) =>
-              BlocProvider(
-                create: (context) => NavigationCubit(),
-                child: NavigationView(),
-              ),
+          builder: (context) => BlocProvider(
+            create: (context) => NavigationCubit(),
+            child: NavigationView(),
+          ),
+          settings: setting,
+        );
+      case PageRouteNames.newSoilTestScreen:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => NewSoilTestCubit(),
+            child: NewSoilTestView(),
+          ),
           settings: setting,
         );
       default:

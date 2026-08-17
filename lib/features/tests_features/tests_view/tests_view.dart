@@ -1,3 +1,4 @@
+import 'package:earthing_calc/core/routes/page_route_names.dart';
 import 'package:earthing_calc/core/theme/colors_palette.dart';
 import 'package:earthing_calc/core/widgets/CustemTextformField.dart';
 import 'package:earthing_calc/core/widgets/CustomElevatedButton.dart';
@@ -22,6 +23,9 @@ class TestsView extends StatelessWidget {
         ),
         actions: [
           Customelevatedbutton(
+            onPressed: () {
+              Navigator.pushNamed(context, PageRouteNames.newSoilTestScreen);
+            },
             buttonText: "+ New Test",
             backGroundColor: WidgetStatePropertyAll(
               ColorsPalette.buttonsOrange,

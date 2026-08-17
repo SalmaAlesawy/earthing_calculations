@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "782499734430",
+    "project_id": "soil-earthing-app",
+    "storage_bucket": "soil-earthing-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782499734430:android:e59b3552045c3de69bec8f",
+        "android_client_info": {
+          "package_name": "com.example.earthing_calc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY6Qu53Asd_uQIptg6lK-rCVdiaUj0xzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

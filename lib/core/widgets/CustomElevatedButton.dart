@@ -2,51 +2,56 @@ import 'package:earthing_calc/core/theme/colors_palette.dart';
 import 'package:flutter/material.dart';
 
 class Customelevatedbutton extends StatelessWidget {
-  const Customelevatedbutton(
-      {super.key,
-      required this.buttonText,
-      this.onPressed,
-      this.backGroundColor,
-      this.forGroundColor,
-      this.image});
+  const Customelevatedbutton({
+    super.key,
+    required this.buttonText,
+    this.onPressed,
+    this.backGroundColor,
+    this.forGroundColor,
+    this.image,
+    this.borderColor,
+  });
   final String buttonText;
   final void Function()? onPressed;
   final WidgetStateProperty<Color?>? backGroundColor;
   final WidgetStateProperty<Color?>? forGroundColor;
   final String? image;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
     return ElevatedButton(
-        style: ButtonStyle(
-            shadowColor: const WidgetStatePropertyAll(Colors.transparent),
-            overlayColor: const WidgetStatePropertyAll(Colors.transparent),
-            backgroundColor: backGroundColor,
-            foregroundColor:
-                forGroundColor ?? WidgetStatePropertyAll(ColorsPalette.white),
-            textStyle: WidgetStatePropertyAll(textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
-            padding: const WidgetStatePropertyAll(
-                EdgeInsets.symmetric(vertical: 20)),
-            shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16))),
+      style: ButtonStyle(
+        side: WidgetStatePropertyAll(
+          BorderSide(color: borderColor ?? Colors.grey),
         ),
-        onPressed: onPressed,
-        child: image == null
-            ? Text(buttonText)
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    image!,
-                    width: 24,
-                    height: 24,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(buttonText),
-                ],
-              ));
+        shadowColor: const WidgetStatePropertyAll(Colors.transparent),
+        overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+        backgroundColor: backGroundColor,
+        foregroundColor:
+            forGroundColor ?? WidgetStatePropertyAll(ColorsPalette.white),
+        textStyle: WidgetStatePropertyAll(
+          textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+        ),
+        padding: const WidgetStatePropertyAll(
+          EdgeInsets.symmetric(vertical: 20),
+        ),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        ),
+      ),
+      onPressed: onPressed,
+      child: image == null
+          ? Text(buttonText)
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(image!, width: 24, height: 24),
+                const SizedBox(width: 10),
+                Text(buttonText),
+              ],
+            ),
+    );
   }
 }

@@ -14,11 +14,13 @@ class Custemtextformfield extends StatelessWidget {
     this.validator,
     this.controller,
      this.maxLines=1,
+    this.onTap,
   });
   final Widget? prefixIcon;
   final String hintText;
   final Widget? suffixIcon;
   final TextInputType? keyboardType;
+  final void Function()? onTap;
   bool obscureText = false;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
@@ -29,6 +31,7 @@ class Custemtextformfield extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
     return SizedBox(
       child: TextFormField(
+        onTap: onTap,
         maxLines: maxLines,
         controller: controller,
         validator: validator,
@@ -36,7 +39,7 @@ class Custemtextformfield extends StatelessWidget {
         obscureText: obscureText,
         keyboardType: keyboardType,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 16),
+          contentPadding: EdgeInsets.symmetric(vertical: 16,horizontal: 10),
             hintText: hintText,
             hintStyle: textTheme.bodyMedium?.copyWith(
               color:ColorsPalette.grayText,
