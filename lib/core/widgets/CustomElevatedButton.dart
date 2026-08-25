@@ -24,7 +24,7 @@ class Customelevatedbutton extends StatelessWidget {
     return ElevatedButton(
       style: ButtonStyle(
         side: WidgetStatePropertyAll(
-          BorderSide(color: borderColor ?? Colors.grey),
+          BorderSide(color: borderColor ?? ColorsPalette.bordersColor),
         ),
         shadowColor: const WidgetStatePropertyAll(Colors.transparent),
         overlayColor: const WidgetStatePropertyAll(Colors.transparent),

@@ -28,7 +28,10 @@ class NewSoilTestCubit extends Cubit<NewSoilTestState> {
       create: (context) => MeasurementsCubit(),
       child: MeasurementsView(),
     ),
-    ResultsView(),
+    BlocProvider(
+      create: (context) => MeasurementsCubit(),
+      child: ResultsView(averageR: 10, probeSpacing: 20, soilResistivity: 10,),
+    ),
     ReportsView(),
   ];
   List<String> appBarTitles = [
@@ -40,11 +43,13 @@ class NewSoilTestCubit extends Cubit<NewSoilTestState> {
 
   void onStepClicked(int index) {
     currentIndex = index;
+    print(currentIndex);
     emit(NewTestStepChangedState(currentIndex));
   }
 
-  void nextStep() {
+  void nextStep({List<double>? parameters}) {
     currentIndex++;
+    print(currentIndex);
     emit(NewTestStepChangedState(currentIndex));
   }
 

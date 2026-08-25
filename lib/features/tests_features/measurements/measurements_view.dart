@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:earthing_calc/core/gen/assets.gen.dart';
 import 'package:earthing_calc/core/theme/colors_palette.dart';
 import 'package:earthing_calc/core/validators/validators.dart';
@@ -29,18 +31,46 @@ class MeasurementsView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Assets.images.winner4Pins.image(),
-                Text(
-                  "Probe Spacing (a)",
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: ColorsPalette.white,
+                DropdownButtonFormField<List<double>>(
+                  dropdownColor: ColorsPalette.buttonBackground,
+                  decoration: InputDecoration(
+                    labelText: "Probe Spacing (a)",
+                    labelStyle: TextStyle(
+                      color: ColorsPalette.white,
+                      fontSize: 20,
+                    ),
+                    hintText: "choose one",
+                    hintStyle: TextStyle(color: ColorsPalette.bordersColor),
+                    fillColor: ColorsPalette.buttonBackground,
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: ColorsPalette.bordersColor),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: ColorsPalette.bordersColor),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: ColorsPalette.bordersColor),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: ColorsPalette.bordersColor),
+                    ),
                   ),
-                ),
-                Custemtextformfield(
-                  controller: measurementsCubit.probeSpacingController,
-                  hintText: "20",
-                  obscureText: false,
-                  validator: (value) =>
-                      Validators.validateNumber(value, "probe Spacing"),
+                  items: measurementsCubit.probeSpacing.map((value) {
+                    return DropdownMenuItem<List<double>>(
+                      value: value,
+                      child: Text("$value"),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      measurementsCubit.onSelectSpace(value);
+                    }
+                  },
                 ),
                 SizedBox(height: 10),
                 Text(
@@ -49,39 +79,111 @@ class MeasurementsView extends StatelessWidget {
                     color: ColorsPalette.white,
                   ),
                 ),
-                ListView.separated(
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: 10);
-                  },
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: measurementsCubit.index,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      children: [
-                        Text(
-                          "R ${index + 1}",
-                          style: textTheme.titleSmall?.copyWith(
-                            color: ColorsPalette.white,
-                          ),
+                SizedBox(
+                  height: 200,
+                  child: ListView.separated(
+                    itemCount: measurementsCubit.points,
+                    separatorBuilder: (context, pointIndex) {
+                      return SizedBox(height: 20);
+                    },
+                    itemBuilder: (BuildContext context, int pontIndex) {
+                      return Container(
+                        margin: EdgeInsets.all(20),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
                         ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.13,
+                        decoration: BoxDecoration(
+                          color: ColorsPalette.buttonBackground,
+                          border: Border.all(color: ColorsPalette.bordersColor),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        Expanded(
-                          child: Custemtextformfield(
-                            validator: (value) => Validators.validateNumber(
-                              value,
-                              "R${index + 1}",
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "point ${pontIndex + 1}",
+                              style: textTheme.titleLarge,
                             ),
-                            controller: measurementsCubit.resistanceControllers[index],
-                            hintText: "${index + 10.13}",
-                            obscureText: false,
-                          ),
+                            ListView.separated(
+                              separatorBuilder: (context, resistanceIndex) {
+                                return SizedBox(height: 10);
+                              },
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: 3,
+                              itemBuilder: (context, resistanceIndex) {
+                                return Row(
+                                  children: [
+                                    Text(
+                                      "R ${resistanceIndex + 1}",
+                                      style: textTheme.titleSmall?.copyWith(
+                                        color: ColorsPalette.white,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width:
+                                          MediaQuery.of(context).size.width *
+                                          0.13,
+                                    ),
+                                    Expanded(
+                                      child: Custemtextformfield(
+                                        validator: (value) =>
+                                            Validators.validateNumber(
+                                              value,
+                                              "R${resistanceIndex + 1}",
+                                            ),
+                                        controller: measurementsCubit
+                                            .resistanceControllers[pontIndex][resistanceIndex],
+                                        hintText: "${resistanceIndex + 10.13}",
+                                        obscureText: false,
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: ColorsPalette.buttonBackground,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          pontIndex <
+                                                      measurementsCubit
+                                                          .allSoilResistivity!
+                                                          .length &&
+                                                  resistanceIndex <
+                                                      measurementsCubit
+                                                          .allSoilResistivity![pontIndex]
+                                                          .length
+                                              ? measurementsCubit
+                                                    .allSoilResistivity![pontIndex][resistanceIndex]
+                                                    .toStringAsFixed(2)
+                                              : "",
+                                          style: textTheme.titleMedium,
+                                          maxLines: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                            SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Text(
+                                  "Average Soil Resistivity: ${pontIndex < measurementsCubit.averagePoints.length ? measurementsCubit.averagePoints[pontIndex].toStringAsFixed(2) : ""}",
+                                  style: textTheme.titleLarge,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ],
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -120,24 +222,60 @@ class MeasurementsView extends StatelessWidget {
                       },
                     ),
                     Expanded(
-                      child: Customelevatedbutton(
-                        borderColor: ColorsPalette.buttonsOrange,
-                        backGroundColor: WidgetStatePropertyAll(
-                          ColorsPalette.buttonsOrange,
-                        ),
-                        buttonText: "Calculate",
-                        onPressed: () {
-                          if (measurementsCubit.formKey.currentState!
-                              .validate()) {
-                            for (TextEditingController resistance
-                                in measurementsCubit.resistanceControllers) {
-                              measurementsCubit.calculations(
-                                resistance.text,
-                                measurementsCubit.probeSpacingController.text,
-                              );
-                              print(measurementsCubit.soilResistivity);
-                            }
-                          }
+                      child: BlocBuilder<NewSoilTestCubit, NewSoilTestState>(
+                        builder: (context, state) {
+                          NewSoilTestCubit newSoilTestCubit = context
+                              .read<NewSoilTestCubit>();
+                          return Customelevatedbutton(
+                            borderColor: ColorsPalette.buttonsOrange,
+                            backGroundColor: WidgetStatePropertyAll(
+                              ColorsPalette.buttonsOrange,
+                            ),
+                            buttonText: "Calculate",
+                            onPressed: () {
+                              if (measurementsCubit.formKey.currentState!
+                                  .validate()) {
+                                measurementsCubit.allSoilResistivity =
+                                    List.generate(
+                                      measurementsCubit
+                                          .resistanceControllers
+                                          .length,
+                                      (_) => [],
+                                    );
+                                measurementsCubit.averagePoints?.clear();
+                                for (
+                                  int pointIndex = 0;
+                                  pointIndex <
+                                      measurementsCubit
+                                          .resistanceControllers
+                                          .length;
+                                  pointIndex++
+                                ) {
+                                  for (
+                                    int resistanceIndex = 0;
+                                    resistanceIndex <
+                                        measurementsCubit
+                                            .resistanceControllers[pointIndex]
+                                            .length;
+                                    resistanceIndex++
+                                  ) {
+                                    measurementsCubit.calculations(
+                                      measurementsCubit
+                                          .resistanceControllers[pointIndex][resistanceIndex]
+                                          .text,
+                                      measurementsCubit
+                                          .selectedSpacing![resistanceIndex],
+                                      pointIndex,
+                                    );
+                                  }
+                                  measurementsCubit.calculatePointAverage(
+                                    pointIndex,
+                                  );
+                                }
+                                measurementsCubit.calculateFinalAverage();
+                              }
+                            },
+                          );
                         },
                       ),
                     ),

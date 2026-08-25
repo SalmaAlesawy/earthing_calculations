@@ -63,6 +63,7 @@ class NewSoilTestView extends StatelessWidget {
                 onStepReached: soilTestCubit.onStepClicked,
                 steps: [
                   EasyStep(
+
                     title: "Site info",
                     finishIcon: Icon(Icons.done_sharp),
                     customStep: Assets.icons.counter1.svg(),

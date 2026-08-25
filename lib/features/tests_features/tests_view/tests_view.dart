@@ -22,13 +22,23 @@ class TestsView extends StatelessWidget {
           style: TextStyle(fontSize: 24, color: Colors.white),
         ),
         actions: [
-          Customelevatedbutton(
-            onPressed: () {
+          GestureDetector(
+            onTap: (){
               Navigator.pushNamed(context, PageRouteNames.newSoilTestScreen);
             },
-            buttonText: "+ New Test",
-            backGroundColor: WidgetStatePropertyAll(
-              ColorsPalette.buttonsOrange,
+            child: Container(
+              margin: EdgeInsets.only(right: 8),
+              padding: EdgeInsets.symmetric(horizontal: 5,vertical: 6),
+              decoration: BoxDecoration(
+                color: ColorsPalette.buttonsOrange,
+                borderRadius: BorderRadius.circular(6)
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.add,color: ColorsPalette.white,),
+                  Text("New Test",style: textTheme.titleMedium,)
+                ],
+              ),
             ),
           ),
         ],
