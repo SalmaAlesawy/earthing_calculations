@@ -3,6 +3,8 @@ import 'package:earthing_calc/features/authentication/login_feature/login_view/l
 import 'package:earthing_calc/features/authentication/login_feature/login_view_model/login_cubit/login_cubit.dart';
 import 'package:earthing_calc/features/authentication/register_feature/register_view/register_view.dart';
 import 'package:earthing_calc/features/authentication/register_feature/register_view_model/register_cubit/register_cubit.dart';
+import 'package:earthing_calc/features/calculations_feature/calculations_view/cabel_sizing_view/cable_sizing_view.dart';
+import 'package:earthing_calc/features/calculations_feature/calculations_view_model/cable_sizing_view_model/cable_sizing_cubit.dart';
 import 'package:earthing_calc/features/navigation/navigation_view/navigation_view.dart';
 import 'package:earthing_calc/features/navigation/navigation_view_model/navigation_cubit.dart';
 import 'package:earthing_calc/features/onboarding_feature/onboarding_view.dart';
@@ -48,6 +50,14 @@ abstract class AppRouter {
           builder: (context) => BlocProvider(
             create: (context) => NewSoilTestCubit(),
             child: NewSoilTestView(),
+          ),
+          settings: setting,
+        );
+      case PageRouteNames.cableSizingScreen:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => CableSizingCubit(),
+            child: CableSizingView(),
           ),
           settings: setting,
         );

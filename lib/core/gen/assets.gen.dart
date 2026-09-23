@@ -36,12 +36,27 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/a.png
+  AssetGenImage get a => const AssetGenImage('assets/images/a.png');
+
+  /// File path: assets/images/bahra_logo.png
+  AssetGenImage get bahraLogo =>
+      const AssetGenImage('assets/images/bahra_logo.png');
+
+  /// File path: assets/images/bahra_name.png
+  AssetGenImage get bahraName =>
+      const AssetGenImage('assets/images/bahra_name.png');
+
+  /// File path: assets/images/connection.png
+  AssetGenImage get connection =>
+      const AssetGenImage('assets/images/connection.png');
+
   /// File path: assets/images/grounding_rods_background.png
   AssetGenImage get groundingRodsBackground =>
       const AssetGenImage('assets/images/grounding_rods_background.png');
 
-  /// File path: assets/images/logo.jpg
-  AssetGenImage get logo => const AssetGenImage('assets/images/logo.jpg');
+  /// File path: assets/images/k.png
+  AssetGenImage get k => const AssetGenImage('assets/images/k.png');
 
   /// File path: assets/images/winner4-pins.png
   AssetGenImage get winner4Pins =>
@@ -51,12 +66,20 @@ class $AssetsImagesGen {
   AssetGenImage get winnerFormula =>
       const AssetGenImage('assets/images/winner_formula.png');
 
+  /// File path: assets/images/wire.png
+  AssetGenImage get wire => const AssetGenImage('assets/images/wire.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
+    a,
+    bahraLogo,
+    bahraName,
+    connection,
     groundingRodsBackground,
-    logo,
+    k,
     winner4Pins,
     winnerFormula,
+    wire,
   ];
 }
 

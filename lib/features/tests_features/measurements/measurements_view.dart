@@ -141,25 +141,27 @@ class MeasurementsView extends StatelessWidget {
                                     ),
                                     SizedBox(width: 10),
                                     Container(
-                                      width: 50,
-                                      height: 50,
+                                      padding: EdgeInsets.all(8),
                                       decoration: BoxDecoration(
-                                        color: ColorsPalette.buttonBackground,
+                                        color: Colors.black54,
                                         borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(
+                                          color: ColorsPalette.bordersColor,
+                                        ),
                                       ),
                                       child: Center(
                                         child: Text(
                                           pontIndex <
                                                       measurementsCubit
-                                                          .allSoilResistivity!
+                                                          .allSoilResistivity
                                                           .length &&
                                                   resistanceIndex <
                                                       measurementsCubit
-                                                          .allSoilResistivity![pontIndex]
+                                                          .allSoilResistivity[pontIndex]
                                                           .length
                                               ? measurementsCubit
-                                                    .allSoilResistivity![pontIndex][resistanceIndex]
-                                                    .toStringAsFixed(2)
+                                                    .allSoilResistivity[pontIndex][resistanceIndex]
+                                                    .toStringAsFixed(1)
                                               : "",
                                           style: textTheme.titleMedium,
                                           maxLines: 1,
@@ -171,13 +173,42 @@ class MeasurementsView extends StatelessWidget {
                               },
                             ),
                             SizedBox(height: 10),
-                            Row(
-                              children: [
-                                Text(
-                                  "Average Soil Resistivity: ${pontIndex < measurementsCubit.averagePoints.length ? measurementsCubit.averagePoints[pontIndex].toStringAsFixed(2) : ""}",
-                                  style: textTheme.titleLarge,
+                            Center(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 5,
+                                  horizontal: 8,
                                 ),
-                              ],
+                                decoration: BoxDecoration(
+                                  color: ColorsPalette.cardColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    textBaseline: TextBaseline.ideographic,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "Average Soil Resistivity: ${pontIndex < measurementsCubit.averagePoints.length ? measurementsCubit.averagePoints[pontIndex].toStringAsFixed(1) : ""} ",
+                                        style: textTheme.titleLarge?.copyWith(
+                                          color: ColorsPalette.buttonsOrange,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                      Text(
+                                        measurementsCubit.averagePoints.isEmpty
+                                            ? ""
+                                            : "Ω.m",
+                                        style: textTheme.titleLarge?.copyWith(
+                                          color: ColorsPalette.buttonsOrange,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -202,84 +233,94 @@ class MeasurementsView extends StatelessWidget {
                     ),
                   ],
                 ),
-                Row(
-                  spacing: 10,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    BlocBuilder<NewSoilTestCubit, NewSoilTestState>(
-                      builder: (context, state) {
-                        NewSoilTestCubit newSoilTestCubit = context
-                            .read<NewSoilTestCubit>();
-                        return Expanded(
+                BlocBuilder<NewSoilTestCubit, NewSoilTestState>(
+                  builder: (context, state) {
+                    NewSoilTestCubit newSoilTestCubit = context
+                        .read<NewSoilTestCubit>();
+                    return Row(
+                      spacing: 10,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
                           child: Customelevatedbutton(
                             backGroundColor: WidgetStatePropertyAll(
                               Colors.black26,
                             ),
                             buttonText: "Back",
-                            onPressed: () {},
-                          ),
-                        );
-                      },
-                    ),
-                    Expanded(
-                      child: BlocBuilder<NewSoilTestCubit, NewSoilTestState>(
-                        builder: (context, state) {
-                          NewSoilTestCubit newSoilTestCubit = context
-                              .read<NewSoilTestCubit>();
-                          return Customelevatedbutton(
-                            borderColor: ColorsPalette.buttonsOrange,
-                            backGroundColor: WidgetStatePropertyAll(
-                              ColorsPalette.buttonsOrange,
-                            ),
-                            buttonText: "Calculate",
                             onPressed: () {
-                              if (measurementsCubit.formKey.currentState!
-                                  .validate()) {
-                                measurementsCubit.allSoilResistivity =
-                                    List.generate(
-                                      measurementsCubit
-                                          .resistanceControllers
-                                          .length,
-                                      (_) => [],
-                                    );
-                                measurementsCubit.averagePoints?.clear();
-                                for (
-                                  int pointIndex = 0;
-                                  pointIndex <
-                                      measurementsCubit
-                                          .resistanceControllers
-                                          .length;
-                                  pointIndex++
-                                ) {
-                                  for (
-                                    int resistanceIndex = 0;
-                                    resistanceIndex <
-                                        measurementsCubit
-                                            .resistanceControllers[pointIndex]
-                                            .length;
-                                    resistanceIndex++
-                                  ) {
-                                    measurementsCubit.calculations(
-                                      measurementsCubit
-                                          .resistanceControllers[pointIndex][resistanceIndex]
-                                          .text,
-                                      measurementsCubit
-                                          .selectedSpacing![resistanceIndex],
-                                      pointIndex,
-                                    );
-                                  }
-                                  measurementsCubit.calculatePointAverage(
-                                    pointIndex,
-                                  );
-                                }
-                                measurementsCubit.calculateFinalAverage();
-                              }
+                              newSoilTestCubit.prevStep();
                             },
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                          ),
+                        ),
+
+                        measurementsCubit.finalAverage == null
+                            ? Expanded(
+                                child: Customelevatedbutton(
+                                  borderColor: ColorsPalette.buttonsOrange,
+                                  backGroundColor: WidgetStatePropertyAll(
+                                    ColorsPalette.buttonsOrange,
+                                  ),
+                                  buttonText: "Calculate",
+                                  onPressed: () {
+                                    if (measurementsCubit.formKey.currentState!
+                                        .validate()) {
+                                      measurementsCubit.allSoilResistivity =
+                                          List.generate(
+                                            measurementsCubit
+                                                .resistanceControllers
+                                                .length,
+                                            (_) => [],
+                                          );
+                                      measurementsCubit.averagePoints.clear();
+                                      for (
+                                        int pointIndex = 0;
+                                        pointIndex <
+                                            measurementsCubit
+                                                .resistanceControllers
+                                                .length;
+                                        pointIndex++
+                                      ) {
+                                        for (
+                                          int resistanceIndex = 0;
+                                          resistanceIndex <
+                                              measurementsCubit
+                                                  .resistanceControllers[pointIndex]
+                                                  .length;
+                                          resistanceIndex++
+                                        ) {
+                                          measurementsCubit.calculations(
+                                            measurementsCubit
+                                                .resistanceControllers[pointIndex][resistanceIndex]
+                                                .text,
+                                            measurementsCubit
+                                                .selectedSpacing![resistanceIndex],
+                                            pointIndex,
+                                          );
+                                        }
+                                        measurementsCubit.calculatePointAverage(
+                                          pointIndex,
+                                        );
+                                      }
+                                      measurementsCubit.calculateFinalAverage();
+                                    }
+                                  },
+                                ),
+                              )
+                            : Expanded(
+                                child: Customelevatedbutton(
+                                  borderColor: ColorsPalette.buttonsOrange,
+                                  backGroundColor: WidgetStatePropertyAll(
+                                    ColorsPalette.buttonsOrange,
+                                  ),
+                                  buttonText: "Next",
+                                  onPressed: () {
+                                    newSoilTestCubit.nextStep();
+                                  },
+                                ),
+                              ),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),

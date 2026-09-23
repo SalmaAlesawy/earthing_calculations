@@ -5,5 +5,6 @@ abstract class PageRouteNames {
   static const String registerScreen="/registerScreen";
   static const String navigationScreen="/navigationScreen";
   static const String newSoilTestScreen="/newSoilTestScreen";
+  static const String cableSizingScreen="/cableSizingScreen";
 
 }

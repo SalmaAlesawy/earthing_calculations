@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Earthing Calculator',
+      title: 'bahra',
       theme: ThemeManager.themeData,
       initialRoute: PageRouteNames.splashScreen,
       onGenerateRoute: AppRouter.onGenerateRoute,

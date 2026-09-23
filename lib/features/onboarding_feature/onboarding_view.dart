@@ -29,12 +29,11 @@ class OnboardingView extends StatelessWidget {
           ),
           Center(
             child: Column(
-              spacing: 5,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 200.0),
-                  child: Assets.images.logo.image(width: 130),
+                  padding: const EdgeInsets.only(top: 150.0),
+                  child: Assets.images.bahraName.image(width: MediaQuery.of(context).size.width*0.9),
                 ),
                 Text(
                   "SOIL RESISTIVITY &",
@@ -70,7 +69,7 @@ class OnboardingView extends StatelessWidget {
                   "Accurate calculations for safe\n and reliable earthing systems",
                   style: textTheme.titleSmall?.copyWith(
                     color: ColorsPalette.grayText,
-                    fontSize: 16,
+                    fontSize: 20,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -93,7 +92,7 @@ class OnboardingView extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: SizedBox(

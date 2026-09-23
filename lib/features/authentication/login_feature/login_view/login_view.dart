@@ -22,7 +22,7 @@ class LoginView extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 50,
-              backgroundImage: Assets.images.logo.provider(),
+              backgroundImage: Assets.images.bahraLogo.provider(),
             ),
             SizedBox(height: 15),
             Text(

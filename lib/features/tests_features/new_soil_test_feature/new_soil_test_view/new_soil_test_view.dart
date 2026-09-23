@@ -12,92 +12,92 @@ class NewSoilTestView extends StatelessWidget {
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: BlocBuilder<NewSoilTestCubit, NewSoilTestState>(
-  builder: (context, state) {
-    NewSoilTestCubit soilTestCubit = context.read<NewSoilTestCubit>();
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Text(
-            soilTestCubit.appBarTitles[soilTestCubit.currentIndex],
-            style: textTheme.titleLarge?.copyWith(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
+        builder: (context, state) {
+          NewSoilTestCubit soilTestCubit = context.read<NewSoilTestCubit>();
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              title: Text(
+                soilTestCubit.appBarTitles[soilTestCubit.currentIndex],
+                style: textTheme.titleLarge?.copyWith(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              centerTitle: true,
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back, color: ColorsPalette.white),
+              ),
             ),
-          ),
-          centerTitle: true,
-          leading: IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.arrow_back, color: ColorsPalette.white),
-          ),
-        ),
-        body: Column(
-            children: [
-              EasyStepper(
-                stepRadius: 25,
-                stepBorderRadius: 16,
-                activeStepBackgroundColor: ColorsPalette.mainOrange,
-                activeStepIconColor: ColorsPalette.white,
-                activeStepTextColor: Colors.white,
-                titleTextStyle: TextStyle(color: Colors.grey),
-                unreachedStepTextColor: ColorsPalette.white,
-                showLoadingAnimation: false,
-                enableStepTapping: true,
-                finishedStepTextColor: Colors.white,
-                finishedStepIconColor: ColorsPalette.white,
-                fitWidth: true,
-                finishedStepBackgroundColor: ColorsPalette.green,
-                unreachedStepBackgroundColor: Colors.blueGrey,
-                unreachedStepIconColor: ColorsPalette.white,
-                lineStyle: LineStyle(
-                  lineLength: 60,
-                  lineType: LineType.normal,
-                  lineThickness: 1,
-                  defaultLineColor: ColorsPalette.grayText,
-                  finishedLineColor: ColorsPalette.green,
-                ),
-                activeStep: soilTestCubit.currentIndex,
-                onStepReached: soilTestCubit.onStepClicked,
-                steps: [
-                  EasyStep(
+            body: Column(
+              children: [
+                EasyStepper(
+                  stepRadius: 20,
+                  activeStepBackgroundColor: ColorsPalette.buttonsOrange,
+                  activeStepTextColor: Colors.white,
+                  unreachedStepTextColor: ColorsPalette.white,
+                  showLoadingAnimation: false,
+                  finishedStepTextColor: ColorsPalette.green,
+                  fitWidth: true,
+                  finishedStepBackgroundColor: ColorsPalette.green,
+                  unreachedStepBackgroundColor: Colors.blueGrey,
+                  lineStyle: LineStyle(
+                    lineLength: 60,
+                    lineType: LineType.dashed,
+                    lineThickness: 1,
+                    defaultLineColor: ColorsPalette.grayText,
+                    finishedLineColor: ColorsPalette.green,
+                  ),
+                  activeStep: soilTestCubit.currentIndex,
 
-                    title: "Site info",
-                    finishIcon: Icon(Icons.done_sharp),
-                    customStep: Assets.icons.counter1.svg(),
-                  ),
-                  EasyStep(
-                    title: "Measurements",
-                    finishIcon: Icon(Icons.done),
-                    customStep: Assets.icons.counter2.svg(),
-                  ),
-                  EasyStep(
-                    title: "Results",
-                    finishIcon: Icon(Icons.done),
-                    customStep: Assets.icons.counter3.svg(),
-                  ),
-                  EasyStep(
-                    title: "Reports",
-                    finishIcon: Icon(Icons.done),
-                    customStep: Assets.icons.counter4.svg(),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Container(
-                    child: soilTestCubit.pages[soilTestCubit.currentIndex],
+                  steps: [
+                    EasyStep(
+                      title: "Site info",
+                      finishIcon: Icon(Icons.done_sharp),
+                      customStep: soilTestCubit.currentIndex > 0
+                          ? Icon(Icons.done,size: 35,)
+                          :Assets.icons.counter1.svg(),
+                    ),
+                    EasyStep(
+                      title: "Measurements",
+                      customStep: soilTestCubit.currentIndex > 1
+                          ? Icon(Icons.done,size: 35)
+                          : Assets.icons.counter2.svg(),
+                    ),
+                    EasyStep(
+                      title: "Results",
+                      customStep:soilTestCubit.currentIndex > 2
+                          ? Icon(Icons.done,size: 35)
+                          : Assets.icons.counter3.svg(),
+                    ),
+                    EasyStep(
+                      title: "Reports",
+                      customStep:soilTestCubit.currentIndex > 3
+                          ? Icon(Icons.done,size: 35)
+                          : Assets.icons.counter4.svg(),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Container(
+                      child: soilTestCubit.pages[soilTestCubit.currentIndex],
+                    ),
                   ),
                 ),
-              ),
-            ],
-        ),
-      );
-  },
-),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

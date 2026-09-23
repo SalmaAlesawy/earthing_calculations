@@ -1,3 +1,4 @@
+import 'package:earthing_calc/core/routes/page_route_names.dart';
 import 'package:earthing_calc/core/theme/colors_palette.dart';
 import 'package:earthing_calc/core/widgets/CustemTextformField.dart';
 import 'package:earthing_calc/core/widgets/CustomElevatedButton.dart';
@@ -35,12 +36,18 @@ class HomeView extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Customelevatedbutton(
-                buttonText: " + New Test",
+                buttonText: " New Test",
                 backGroundColor: WidgetStatePropertyAll(
                   ColorsPalette.buttonsOrange,
                 ),
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    PageRouteNames.newSoilTestScreen,
+                  );
+                },
               ),
-              SizedBox(height: 24,),
+              SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

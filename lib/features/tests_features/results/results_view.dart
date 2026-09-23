@@ -2,6 +2,7 @@ import 'package:earthing_calc/core/gen/assets.gen.dart';
 import 'package:earthing_calc/core/theme/colors_palette.dart';
 import 'package:earthing_calc/core/widgets/CustomElevatedButton.dart';
 import 'package:earthing_calc/features/tests_features/measurements/measurements_view_model/measurements_cubit.dart';
+import 'package:earthing_calc/features/tests_features/new_soil_test_feature/new_soil_test_view_model/new_soil_test_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,8 +39,10 @@ class ResultsView extends StatelessWidget {
                     children: [
                       Text("Probe Spacing (a)", style: textTheme.titleLarge),
                       Container(
-                        height: 50,
-                        width: 100,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: ColorsPalette.buttonBackground,
                           border: Border.all(color: ColorsPalette.bordersColor),
@@ -48,31 +51,6 @@ class ResultsView extends StatelessWidget {
                         child: Center(
                           child: Text(
                             "${measurementsCubit.selectedSpacing.toString()} m",
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Average Resistance", style: textTheme.titleLarge),
-                      Container(
-                        height: 50,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: ColorsPalette.buttonBackground,
-                          border: Border.all(color: ColorsPalette.bordersColor),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Center(
-                          child: Text(
-                            " Ω",
                             style: textTheme.bodyMedium?.copyWith(
                               color: Colors.white,
                               fontSize: 16,
@@ -112,7 +90,7 @@ class ResultsView extends StatelessWidget {
                         children: [
                           TextSpan(
                             text:
-                                "${measurementsCubit.allSoilResistivity}",
+                                "${measurementsCubit.finalAverage?.toStringAsFixed(2)}",
                             style: textTheme.titleLarge?.copyWith(
                               color: ColorsPalette.mainOrange,
                               fontSize: 40,
@@ -145,10 +123,20 @@ class ResultsView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Customelevatedbutton(
-                      backGroundColor: WidgetStatePropertyAll(Colors.black26),
-                      buttonText: "Back",
-                      onPressed: () {},
+                    child: BlocBuilder<NewSoilTestCubit, NewSoilTestState>(
+                      builder: (context, state) {
+                        NewSoilTestCubit newSoilTestCubit = context
+                            .read<NewSoilTestCubit>();
+                        return Customelevatedbutton(
+                          backGroundColor: WidgetStatePropertyAll(
+                            Colors.black26,
+                          ),
+                          buttonText: "Back",
+                          onPressed: () {
+                            newSoilTestCubit.prevStep();
+                          },
+                        );
+                      },
                     ),
                   ),
 
