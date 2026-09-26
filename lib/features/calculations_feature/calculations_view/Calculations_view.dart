@@ -1,6 +1,5 @@
-import 'package:earthing_calc/core/gen/assets.gen.dart';
-import 'package:earthing_calc/core/routes/page_route_names.dart';
-import 'package:earthing_calc/core/theme/colors_palette.dart';
+import 'package:earthing_calc/features/calculations_feature/calculations_constants/calculation_constants.dart';
+import 'package:earthing_calc/features/calculations_feature/calculations_view/widgets/calculations_card.dart';
 import 'package:flutter/material.dart';
 
 class CalculationsView extends StatelessWidget {
@@ -16,35 +15,19 @@ class CalculationsView extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
       ),
-      body: Column(
-        children: [
-          ListTile(
-            leading: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: ColorsPalette.mainOrange),
-              ),
-              child: Assets.images.wire.image(width: 40),
-            ),
-            title: Text(
-              "Cable Sizing",
-              style: textTheme.bodyMedium?.copyWith(color: ColorsPalette.white),
-            ),
-            subtitle: Text(
-              "Earthing conductor &fault current sizing",
-              style: textTheme.bodySmall?.copyWith(
-                color: ColorsPalette.grayText,
-              ),
-            ),
-            trailing: IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, PageRouteNames.cableSizingScreen);
-
-              },
-              icon: Icon(Icons.arrow_forward_ios_outlined),
-            ),
-          ),
-        ],
+      body: ListView.separated(
+        itemBuilder: (context, index) {
+          return CalculationsCard(
+            leading: Image.asset(CalculationConstants.leading[index],fit: BoxFit.cover,),
+            title: CalculationConstants.titles[index],
+            subtitle: CalculationConstants.subtitles[index],
+            pageRouteName: CalculationConstants.screensNames[index],
+          );
+        },
+        separatorBuilder: (context, index) {
+          return SizedBox();
+        },
+        itemCount: CalculationConstants.screensNames.length,
       ),
     );
   }

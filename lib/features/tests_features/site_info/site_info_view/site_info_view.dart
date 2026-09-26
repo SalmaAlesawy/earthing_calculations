@@ -72,7 +72,7 @@ class SiteInfoView extends StatelessWidget {
                       }
                     },
                     keyboardType: TextInputType.datetime,
-                    validator: Validators.validateTestDate,
+                    validator: Validators.validator,
                     controller: siteInfoCubit.testDateController,
                     hintText: "May 14,2004",
                     obscureText: false,

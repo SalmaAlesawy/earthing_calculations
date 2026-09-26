@@ -26,9 +26,9 @@ class Validators {
     return null;
   }
 
- static String? validateTestDate(String? value) {
+ static String? validator(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'Test date is required';
+      return 'This Field is required';
     }
     return null;
   }

@@ -36,6 +36,9 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/Single.png
+  AssetGenImage get single => const AssetGenImage('assets/images/Single.png');
+
   /// File path: assets/images/a.png
   AssetGenImage get a => const AssetGenImage('assets/images/a.png');
 
@@ -51,12 +54,35 @@ class $AssetsImagesGen {
   AssetGenImage get connection =>
       const AssetGenImage('assets/images/connection.png');
 
+  /// File path: assets/images/correct.png
+  AssetGenImage get correct => const AssetGenImage('assets/images/correct.png');
+
   /// File path: assets/images/grounding_rods_background.png
   AssetGenImage get groundingRodsBackground =>
       const AssetGenImage('assets/images/grounding_rods_background.png');
 
   /// File path: assets/images/k.png
   AssetGenImage get k => const AssetGenImage('assets/images/k.png');
+
+  /// File path: assets/images/multible_result.png
+  AssetGenImage get multibleResult =>
+      const AssetGenImage('assets/images/multible_result.png');
+
+  /// File path: assets/images/multiple_earth_rods.png
+  AssetGenImage get multipleEarthRods =>
+      const AssetGenImage('assets/images/multiple_earth_rods.png');
+
+  /// File path: assets/images/multiple_rods.png
+  AssetGenImage get multipleRods =>
+      const AssetGenImage('assets/images/multiple_rods.png');
+
+  /// File path: assets/images/single_earth_rod.png
+  AssetGenImage get singleEarthRod =>
+      const AssetGenImage('assets/images/single_earth_rod.png');
+
+  /// File path: assets/images/single_result.png
+  AssetGenImage get singleResult =>
+      const AssetGenImage('assets/images/single_result.png');
 
   /// File path: assets/images/winner4-pins.png
   AssetGenImage get winner4Pins =>
@@ -71,12 +97,19 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+    single,
     a,
     bahraLogo,
     bahraName,
     connection,
+    correct,
     groundingRodsBackground,
     k,
+    multibleResult,
+    multipleEarthRods,
+    multipleRods,
+    singleEarthRod,
+    singleResult,
     winner4Pins,
     winnerFormula,
     wire,
