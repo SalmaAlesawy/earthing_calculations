@@ -1,8 +1,8 @@
 import 'package:earthing_calc/core/gen/assets.gen.dart';
 import 'package:earthing_calc/core/theme/colors_palette.dart';
 import 'package:earthing_calc/core/validators/validators.dart';
-import 'package:earthing_calc/core/widgets/CustemTextformField.dart';
-import 'package:earthing_calc/core/widgets/CustomElevatedButton.dart';
+import 'package:earthing_calc/core/widgets/custom_text_form_field.dart';
+import 'package:earthing_calc/core/widgets/custom_elevated_button.dart';
 import 'package:earthing_calc/features/calculations_feature/calculations_view_model/multiple_earth_rod_view_model/multiple_earth_rod_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -84,6 +84,14 @@ class $AssetsImagesGen {
   AssetGenImage get singleResult =>
       const AssetGenImage('assets/images/single_result.png');
 
+  /// File path: assets/images/trianglur.png
+  AssetGenImage get trianglur =>
+      const AssetGenImage('assets/images/trianglur.png');
+
+  /// File path: assets/images/triangular_rod_system.png
+  AssetGenImage get triangularRodSystem =>
+      const AssetGenImage('assets/images/triangular_rod_system.png');
+
   /// File path: assets/images/winner4-pins.png
   AssetGenImage get winner4Pins =>
       const AssetGenImage('assets/images/winner4-pins.png');
@@ -110,6 +118,8 @@ class $AssetsImagesGen {
     multipleRods,
     singleEarthRod,
     singleResult,
+    trianglur,
+    triangularRodSystem,
     winner4Pins,
     winnerFormula,
     wire,

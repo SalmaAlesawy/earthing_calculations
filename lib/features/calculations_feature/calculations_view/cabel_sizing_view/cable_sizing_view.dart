@@ -1,6 +1,6 @@
 import 'package:earthing_calc/core/theme/colors_palette.dart';
-import 'package:earthing_calc/core/widgets/CustemTextformField.dart';
-import 'package:earthing_calc/core/widgets/CustomElevatedButton.dart';
+import 'package:earthing_calc/core/widgets/custom_text_form_field.dart';
+import 'package:earthing_calc/core/widgets/custom_elevated_button.dart';
 import 'package:earthing_calc/features/calculations_feature/calculations_constants/calculation_constants.dart';
 import 'package:earthing_calc/features/calculations_feature/calculations_view_model/cable_sizing_view_model/cable_sizing_cubit.dart';
 import 'package:flutter/material.dart';

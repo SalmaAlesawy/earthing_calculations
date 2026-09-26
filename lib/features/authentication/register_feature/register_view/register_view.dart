@@ -1,9 +1,9 @@
 import 'package:earthing_calc/core/gen/assets.gen.dart';
 import 'package:earthing_calc/core/routes/page_route_names.dart';
 import 'package:earthing_calc/core/theme/colors_palette.dart';
-import 'package:earthing_calc/core/widgets/CustemTextformField.dart';
-import 'package:earthing_calc/core/widgets/CustomElevatedButton.dart';
-import 'package:earthing_calc/core/widgets/CustomeTextButton.dart';
+import 'package:earthing_calc/core/widgets/custom_text_form_field.dart';
+import 'package:earthing_calc/core/widgets/custom_elevated_button.dart';
+import 'package:earthing_calc/core/widgets/custom_text_button.dart';
 import 'package:earthing_calc/features/authentication/register_feature/register_view_model/password_confirm_visibility_cubit/register_password_confirm_cubit.dart';
 import 'package:earthing_calc/features/authentication/register_feature/register_view_model/password_visibility_cubit/register_password_visibilty_cubit.dart';
 import 'package:earthing_calc/features/authentication/register_feature/register_view_model/register_cubit/register_cubit.dart';

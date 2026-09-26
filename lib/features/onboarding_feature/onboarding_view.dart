@@ -1,7 +1,7 @@
 import 'package:earthing_calc/core/gen/assets.gen.dart';
 import 'package:earthing_calc/core/routes/page_route_names.dart';
 import 'package:earthing_calc/core/theme/colors_palette.dart';
-import 'package:earthing_calc/core/widgets/CustomElevatedButton.dart';
+import 'package:earthing_calc/core/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingView extends StatelessWidget {

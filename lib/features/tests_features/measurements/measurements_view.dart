@@ -1,11 +1,10 @@
-import 'dart:math';
 
 import 'package:earthing_calc/core/gen/assets.gen.dart';
 import 'package:earthing_calc/core/theme/colors_palette.dart';
 import 'package:earthing_calc/core/validators/validators.dart';
-import 'package:earthing_calc/core/widgets/CustemTextformField.dart';
-import 'package:earthing_calc/core/widgets/CustomElevatedButton.dart';
-import 'package:earthing_calc/core/widgets/CustomeTextButton.dart';
+import 'package:earthing_calc/core/widgets/custom_text_form_field.dart';
+import 'package:earthing_calc/core/widgets/custom_elevated_button.dart';
+import 'package:earthing_calc/core/widgets/custom_text_button.dart';
 import 'package:earthing_calc/features/tests_features/measurements/measurements_view_model/measurements_cubit.dart';
 import 'package:earthing_calc/features/tests_features/new_soil_test_feature/new_soil_test_view_model/new_soil_test_cubit.dart';
 import 'package:flutter/material.dart';

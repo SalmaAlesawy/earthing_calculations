@@ -8,6 +8,7 @@ abstract class PageRouteNames {
   static const String cableSizingScreen="/cableSizingScreen";
   static const String singleRodScreen="/singleRodScreen";
   static const String multipleRodsScreen="/MultipleRodsScreen";
+  static const String triangularRodScreen="/triangularRodScreen";
   static const String singleResistanceScreen="/singleResistanceScreen";
 
 }

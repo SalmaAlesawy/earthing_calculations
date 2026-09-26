@@ -6,9 +6,11 @@ import 'package:earthing_calc/features/authentication/register_feature/register_
 import 'package:earthing_calc/features/calculations_feature/calculations_view/cabel_sizing_view/cable_sizing_view.dart';
 import 'package:earthing_calc/features/calculations_feature/calculations_view/multiple_rods_view/multiple_rods_veiw.dart';
 import 'package:earthing_calc/features/calculations_feature/calculations_view/single_rod_view/single_rod_view.dart';
+import 'package:earthing_calc/features/calculations_feature/calculations_view/triangular_rods_view/triangular_rods_view.dart';
 import 'package:earthing_calc/features/calculations_feature/calculations_view_model/cable_sizing_view_model/cable_sizing_cubit.dart';
 import 'package:earthing_calc/features/calculations_feature/calculations_view_model/multiple_earth_rod_view_model/multiple_earth_rod_cubit.dart';
 import 'package:earthing_calc/features/calculations_feature/calculations_view_model/single_earth_rod_view_model/single_earth_rod_cubit.dart';
+import 'package:earthing_calc/features/calculations_feature/calculations_view_model/triangular_rod_system_view_model/triangular_rod_system_cubit.dart';
 import 'package:earthing_calc/features/navigation/navigation_view/navigation_view.dart';
 import 'package:earthing_calc/features/navigation/navigation_view_model/navigation_cubit.dart';
 import 'package:earthing_calc/features/onboarding_feature/onboarding_view.dart';
@@ -78,6 +80,14 @@ abstract class AppRouter {
           builder: (context) => BlocProvider(
             create: (context) => MultipleEarthRodCubit(),
             child: MultipleRodsView(),
+          ),
+          settings: setting,
+        );
+      case PageRouteNames.triangularRodScreen:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => TriangularRodSystemCubit(),
+            child: TriangularRodsView(),
           ),
           settings: setting,
         );
