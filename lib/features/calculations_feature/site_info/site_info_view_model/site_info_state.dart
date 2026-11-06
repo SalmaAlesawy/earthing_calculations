@@ -9,6 +9,13 @@ final class SiteInfoLoadingState extends SiteInfoState {}
 
 final class SiteInfoSuccessState extends SiteInfoState {}
 
+final class SiteInfoLoadedState extends SiteInfoState {
+  final List<SiteInfoModel> projects;
+  SiteInfoLoadedState({required this.projects});
+}
+
+final class SiteTempInfoState extends SiteInfoState {}
+
 final class SiteInfoErrorState extends SiteInfoState {
   final String errorMessage;
   SiteInfoErrorState({required this.errorMessage});

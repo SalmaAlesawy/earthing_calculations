@@ -1,9 +1,10 @@
 import 'package:earthing_calc/core/gen/assets.gen.dart';
 import 'package:earthing_calc/core/routes/page_route_names.dart';
 import 'package:earthing_calc/core/theme/colors_palette.dart';
-import 'package:earthing_calc/core/widgets/custom_text_form_field.dart';
+import 'package:earthing_calc/core/validators/validators.dart';
 import 'package:earthing_calc/core/widgets/custom_elevated_button.dart';
 import 'package:earthing_calc/core/widgets/custom_text_button.dart';
+import 'package:earthing_calc/core/widgets/custom_text_form_field.dart';
 import 'package:earthing_calc/features/authentication/login_feature/login_view_model/login_cubit/login_cubit.dart';
 import 'package:earthing_calc/features/authentication/login_feature/login_view_model/password_visibility_cubit/password_visibility_cubit.dart';
 import 'package:flutter/material.dart';
@@ -45,10 +46,29 @@ class LoginView extends StatelessWidget {
                 alignment: AlignmentGeometry.centerStart,
                 child: BlocProvider(
                   create: (context) => PasswordVisibilityCubit(),
-                  child: BlocBuilder<LoginCubit, LoginState>(
+                  child: BlocConsumer<LoginCubit, LoginState>(
+                    listener: (context, state) {
+                      if (state is SuccessLogin) {
+                        Navigator.pushReplacementNamed(
+                          context,
+                          PageRouteNames.navigationScreen,
+                        );
+                      }
+                      if (state is ErrorLogin) {
+                        print("error ${state.errorMessage.toString()}");
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.errorMessage.toString()),
+                            backgroundColor: Colors.red,
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }
+                    },
                     builder: (context, state) {
                       LoginCubit loginCubit = context.read<LoginCubit>();
                       return Form(
+                        key: loginCubit.formKey,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -65,6 +85,10 @@ class LoginView extends StatelessWidget {
                             SizedBox(height: 10),
                             Custemtextformfield(
                               controller: loginCubit.emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              validator: (value) {
+                                return Validators.validateEmail(value);
+                              },
                               hintText: "Email",
                               obscureText: false,
                               prefixIcon: Icon(Icons.email_outlined),
@@ -80,6 +104,10 @@ class LoginView extends StatelessWidget {
                                 return Custemtextformfield(
                                   controller: loginCubit.passwordController,
                                   hintText: "Password",
+                                  validator: (value) {
+                                    return Validators.validatePassword(value);
+                                  },
+                                  keyboardType: TextInputType.visiblePassword,
                                   obscureText:
                                       passwordCubit.loginPasswordVisibility,
                                   prefixIcon: Icon(Icons.lock_outline),
@@ -100,18 +128,25 @@ class LoginView extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 20),
-                            Customelevatedbutton(
-                              onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                  context,
-                                  PageRouteNames.navigationScreen,
-                                );
-                              },
-                              buttonText: "Sign In",
-                              backGroundColor: WidgetStatePropertyAll(
-                                ColorsPalette.buttonsOrange,
-                              ),
-                            ),
+                            state is LoadingLogin
+                                ? CircularProgressIndicator()
+                                : Customelevatedbutton(
+                                    onPressed: () {
+                                      if (loginCubit.formKey.currentState!
+                                          .validate()) {
+                                        loginCubit.signInWithEmailAndPassword(
+                                          loginCubit.emailController.text,
+                                          loginCubit.passwordController.text,
+                                        );
+                                      } else {
+                                        print("Validation failed");
+                                      }
+                                    },
+                                    buttonText: "Sign In",
+                                    backGroundColor: WidgetStatePropertyAll(
+                                      ColorsPalette.buttonsOrange,
+                                    ),
+                                  ),
                             SizedBox(height: 20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,

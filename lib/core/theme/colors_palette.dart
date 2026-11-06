@@ -10,4 +10,7 @@ abstract class ColorsPalette {
   static const Color green = Color(0xFF31A85C);
   static const Color buttonBackground=Color(0xff17212B);
   static const Color bordersColor=Color(0xff34434A);
+  static const Color brightBlue=Color(0xFF2EA1FF);
+  static const Color darkBlue=Color(0xFF142A3D);
+  static const Color resultsBorders=Color(0xFF2A4763);
 }

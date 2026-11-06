@@ -17,6 +17,10 @@ import 'package:vector_graphics/vector_graphics.dart' as _vg;
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/calculator_icon.svg
+  SvgGenImage get calculatorIcon =>
+      const SvgGenImage('assets/icons/calculator_icon.svg');
+
   /// File path: assets/icons/counter1.svg
   SvgGenImage get counter1 => const SvgGenImage('assets/icons/counter1.svg');
 
@@ -30,17 +34,31 @@ class $AssetsIconsGen {
   SvgGenImage get counter4 => const SvgGenImage('assets/icons/counter4.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [counter1, counter2, counter3, counter4];
+  List<SvgGenImage> get values => [
+    calculatorIcon,
+    counter1,
+    counter2,
+    counter3,
+    counter4,
+  ];
 }
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
+
+  /// File path: assets/images/Bahra_Letterhead.png
+  AssetGenImage get bahraLetterhead =>
+      const AssetGenImage('assets/images/Bahra_Letterhead.png');
 
   /// File path: assets/images/Single.png
   AssetGenImage get single => const AssetGenImage('assets/images/Single.png');
 
   /// File path: assets/images/a.png
   AssetGenImage get a => const AssetGenImage('assets/images/a.png');
+
+  /// File path: assets/images/bahra_catalog_image.png
+  AssetGenImage get bahraCatalogImage =>
+      const AssetGenImage('assets/images/bahra_catalog_image.png');
 
   /// File path: assets/images/bahra_logo.png
   AssetGenImage get bahraLogo =>
@@ -54,8 +72,17 @@ class $AssetsImagesGen {
   AssetGenImage get connection =>
       const AssetGenImage('assets/images/connection.png');
 
+  /// File path: assets/images/contact_us.png
+  AssetGenImage get contactUs =>
+      const AssetGenImage('assets/images/contact_us.png');
+
   /// File path: assets/images/correct.png
   AssetGenImage get correct => const AssetGenImage('assets/images/correct.png');
+
+  /// File path: assets/images/cross_sectional_area_formula_card.png
+  AssetGenImage get crossSectionalAreaFormulaCard => const AssetGenImage(
+    'assets/images/cross_sectional_area_formula_card.png',
+  );
 
   /// File path: assets/images/grounding_rods_background.png
   AssetGenImage get groundingRodsBackground =>
@@ -63,6 +90,11 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/k.png
   AssetGenImage get k => const AssetGenImage('assets/images/k.png');
+
+  /// File path: assets/images/material_coefficient_formula_panel.png
+  AssetGenImage get materialCoefficientFormulaPanel => const AssetGenImage(
+    'assets/images/material_coefficient_formula_panel.png',
+  );
 
   /// File path: assets/images/multible_result.png
   AssetGenImage get multibleResult =>
@@ -76,13 +108,25 @@ class $AssetsImagesGen {
   AssetGenImage get multipleRods =>
       const AssetGenImage('assets/images/multiple_rods.png');
 
+  /// File path: assets/images/multiple_rods_formula.png
+  AssetGenImage get multipleRodsFormula =>
+      const AssetGenImage('assets/images/multiple_rods_formula.png');
+
   /// File path: assets/images/single_earth_rod.png
   AssetGenImage get singleEarthRod =>
       const AssetGenImage('assets/images/single_earth_rod.png');
 
+  /// File path: assets/images/single_earth_rod_Formula.png
+  AssetGenImage get singleEarthRodFormula =>
+      const AssetGenImage('assets/images/single_earth_rod_Formula.png');
+
   /// File path: assets/images/single_result.png
   AssetGenImage get singleResult =>
       const AssetGenImage('assets/images/single_result.png');
+
+  /// File path: assets/images/soil_testing.png
+  AssetGenImage get soilTesting =>
+      const AssetGenImage('assets/images/soil_testing.png');
 
   /// File path: assets/images/trianglur.png
   AssetGenImage get trianglur =>
@@ -92,36 +136,44 @@ class $AssetsImagesGen {
   AssetGenImage get triangularRodSystem =>
       const AssetGenImage('assets/images/triangular_rod_system.png');
 
-  /// File path: assets/images/winner4-pins.png
-  AssetGenImage get winner4Pins =>
-      const AssetGenImage('assets/images/winner4-pins.png');
+  /// File path: assets/images/wenner4-pins.png
+  AssetGenImage get wenner4Pins =>
+      const AssetGenImage('assets/images/wenner4-pins.png');
 
-  /// File path: assets/images/winner_formula.png
-  AssetGenImage get winnerFormula =>
-      const AssetGenImage('assets/images/winner_formula.png');
+  /// File path: assets/images/wenner_formula.png
+  AssetGenImage get wennerFormula =>
+      const AssetGenImage('assets/images/wenner_formula.png');
 
   /// File path: assets/images/wire.png
   AssetGenImage get wire => const AssetGenImage('assets/images/wire.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
+    bahraLetterhead,
     single,
     a,
+    bahraCatalogImage,
     bahraLogo,
     bahraName,
     connection,
+    contactUs,
     correct,
+    crossSectionalAreaFormulaCard,
     groundingRodsBackground,
     k,
+    materialCoefficientFormulaPanel,
     multibleResult,
     multipleEarthRods,
     multipleRods,
+    multipleRodsFormula,
     singleEarthRod,
+    singleEarthRodFormula,
     singleResult,
+    soilTesting,
     trianglur,
     triangularRodSystem,
-    winner4Pins,
-    winnerFormula,
+    wenner4Pins,
+    wennerFormula,
     wire,
   ];
 }

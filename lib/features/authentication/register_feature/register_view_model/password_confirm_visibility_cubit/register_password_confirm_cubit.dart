@@ -1,10 +1,11 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'register_password_confirm_state.dart';
 
-class RegisterPasswordConfirmVisibilityConfirmCubit extends Cubit<RegisterPasswordConfirmState> {
-  RegisterPasswordConfirmVisibilityConfirmCubit() : super(RegisterPasswordConfirmVisible());
+class RegisterPasswordConfirmVisibilityConfirmCubit
+    extends Cubit<RegisterPasswordConfirmState> {
+  RegisterPasswordConfirmVisibilityConfirmCubit()
+    : super(RegisterPasswordConfirmVisible());
   bool confirmVisibility = true;
   Future<void> visibilityPasswordConfirm() async {
     confirmVisibility = !confirmVisibility;

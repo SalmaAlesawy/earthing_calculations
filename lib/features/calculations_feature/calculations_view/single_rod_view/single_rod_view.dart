@@ -1,12 +1,15 @@
 import 'package:earthing_calc/core/gen/assets.gen.dart';
+import 'package:earthing_calc/core/shared_view_models/export_pdf_cubit/export_pdf_cubit.dart';
 import 'package:earthing_calc/core/theme/colors_palette.dart';
 import 'package:earthing_calc/core/validators/validators.dart';
-import 'package:earthing_calc/core/widgets/custom_text_form_field.dart';
 import 'package:earthing_calc/core/widgets/custom_elevated_button.dart';
-import 'package:earthing_calc/features/calculations_feature/calculations_view/widgets/summary_card.dart';
+import 'package:earthing_calc/core/widgets/custom_text_form_field.dart';
+import 'package:earthing_calc/features/calculations_feature/calculations_constants/calculation_constants.dart';
+import 'package:earthing_calc/features/calculations_feature/calculations_view/single_rod_view/single_rod_result_view.dart';
 import 'package:earthing_calc/features/calculations_feature/calculations_view_model/single_earth_rod_view_model/single_earth_rod_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:printing/printing.dart';
 
 class SingleRodView extends StatelessWidget {
   const SingleRodView({super.key});
@@ -27,195 +30,176 @@ class SingleRodView extends StatelessWidget {
           color: ColorsPalette.white,
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<SingleEarthRodCubit, SingleEarthRodState>(
-          builder: (context, state) {
-            SingleEarthRodCubit singleEarthRodCubit = context
-                .read<SingleEarthRodCubit>();
-            return Form(
-              key: singleEarthRodCubit.formKey,
-              child: SingleChildScrollView(
-                child: Column(
-                  spacing: 10,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    singleEarthRodCubit.singleRodResistance == null
-                        ? Assets.images.singleEarthRod.image()
-                        : Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: ColorsPalette.bordersColor,
-                              ),
-                            ),
-                            child: Column(
-                              children: [
-                                Row(
-                                  spacing: 30,
+      body: BlocListener<ExportPdfCubit, ExportPdfState>(
+        listener: (context, state) async {
+          if (state is SuccessExportingPdfState) {
+            await Printing.layoutPdf(onLayout: (_) async => state.pdfBytes);
+          }
+          if (state is ErrorExportingPdfState) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+          }
+        },
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: BlocBuilder<SingleEarthRodCubit, SingleEarthRodState>(
+              builder: (context, state) {
+                SingleEarthRodCubit singleEarthRodCubit = context
+                    .read<SingleEarthRodCubit>();
+                return singleEarthRodCubit.singleRodResistance == null
+                    ? Form(
+                        key: singleEarthRodCubit.formKey,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            spacing: 10,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Assets.images.singleEarthRod.image(),
+
+                              Container(
+                                padding: EdgeInsets.all(8),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: ColorsPalette.bordersColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Column(
+                                  spacing: 10,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Assets.images.correct.image(width: 50),
                                     Text(
-                                      "Result",
+                                      "Input Parameters",
                                       style: textTheme.bodyLarge?.copyWith(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
+                                        color: ColorsPalette.mainOrange,
                                       ),
+                                    ),
+                                    Text(
+                                      "Soil Resistivity (p)",
+                                      style: textTheme.bodyMedium?.copyWith(
+                                        color: ColorsPalette.white,
+                                      ),
+                                    ),
+                                    Custemtextformfield(
+                                      validator: (value) {
+                                        return Validators.validator(value);
+                                      },
+                                      controller: singleEarthRodCubit
+                                          .singleRodControllers["soil Resistivity"],
+                                      hintText: "100",
+                                      obscureText: false,
+                                      suffixIcon: Text(
+                                        "Ω·m",
+                                        style: textTheme.titleSmall,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Rod Length (L)",
+                                      style: textTheme.bodyMedium?.copyWith(
+                                        color: ColorsPalette.white,
+                                      ),
+                                    ),
+                                    Custemtextformfield(
+                                      validator: (value) {
+                                        return Validators.validator(value);
+                                      },
+                                      controller: singleEarthRodCubit
+                                          .singleRodControllers["rod Length"],
+                                      hintText: "3",
+                                      obscureText: false,
+                                      suffixIcon: Text(
+                                        "m",
+                                        style: textTheme.titleSmall,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Rod Diameter (d)",
+                                      style: textTheme.bodyMedium?.copyWith(
+                                        color: ColorsPalette.white,
+                                      ),
+                                    ),
+                                    Custemtextformfield(
+                                      validator: (value) {
+                                        return Validators.validator(value);
+                                      },
+                                      controller: singleEarthRodCubit
+                                          .singleRodControllers["rod Diameter"],
+                                      hintText: "0.016",
+                                      obscureText: false,
+                                      suffixIcon: Text(
+                                        "Ω·m",
+                                        style: textTheme.titleSmall,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Rod Material",
+                                      style: textTheme.bodyMedium?.copyWith(
+                                        color: ColorsPalette.white,
+                                      ),
+                                    ),
+                                    Custemtextformfield(
+                                      validator: (value) {
+                                        return Validators.validator(value);
+                                      },
+                                      controller: singleEarthRodCubit
+                                          .singleRodControllers["rod Material"],
+                                      hintText: "Copper Bonded Steel",
+                                      obscureText: false,
                                     ),
                                   ],
                                 ),
-                                Text(
-                                  "${singleEarthRodCubit.singleRodResistance?.toStringAsFixed(2)} Ω",
-                                  style: textTheme.bodyLarge?.copyWith(
-                                    color: ColorsPalette.mainOrange,
-                                    fontSize: 40,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  "Earth Resistance",
-                                  style: textTheme.bodySmall?.copyWith(
-                                    fontSize: 15,
-                                    color: ColorsPalette.grayText,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                    singleEarthRodCubit.singleRodResistance == null
-                        ? Container(
-                            padding: EdgeInsets.all(8),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: ColorsPalette.bordersColor,
                               ),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Column(
-                              spacing: 10,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Input Parameters",
-                                  style: textTheme.bodyLarge?.copyWith(
-                                    color: ColorsPalette.mainOrange,
-                                  ),
+                              SizedBox(height: 30),
+                              Customelevatedbutton(
+                                buttonText: "Calculate",
+                                backGroundColor: WidgetStatePropertyAll(
+                                  ColorsPalette.mainOrange,
                                 ),
-                                Text(
-                                  "Soil Resistivity (p)",
-                                  style: textTheme.bodyMedium?.copyWith(
-                                    color: ColorsPalette.white,
-                                  ),
-                                ),
-                                Custemtextformfield(
-                                  validator: (value) {
-                                    return Validators.validator(value);
-                                  },
-                                  controller: singleEarthRodCubit
-                                      .soilResistivityController,
-                                  hintText: "100",
-                                  obscureText: false,
-                                  suffixIcon: Text(
-                                    "Ω·m",
-                                    style: textTheme.titleSmall,
-                                  ),
-                                ),
-                                Text(
-                                  "Rod Length (L)",
-                                  style: textTheme.bodyMedium?.copyWith(
-                                    color: ColorsPalette.white,
-                                  ),
-                                ),
-                                Custemtextformfield(
-                                  validator: (value) {
-                                    return Validators.validator(value);
-                                  },
-                                  controller:
-                                      singleEarthRodCubit.rodLengthController,
-                                  hintText: "3",
-                                  obscureText: false,
-                                  suffixIcon: Text(
-                                    "m",
-                                    style: textTheme.titleSmall,
-                                  ),
-                                ),
-                                Text(
-                                  "Rod Diameter (d)",
-                                  style: textTheme.bodyMedium?.copyWith(
-                                    color: ColorsPalette.white,
-                                  ),
-                                ),
-                                Custemtextformfield(
-                                  validator: (value) {
-                                    return Validators.validator(value);
-                                  },
-                                  controller:
-                                      singleEarthRodCubit.rodDiameterController,
-                                  hintText: "0.016",
-                                  obscureText: false,
-                                  suffixIcon: Text(
-                                    "Ω·m",
-                                    style: textTheme.titleSmall,
-                                  ),
-                                ),
-                                Text(
-                                  "Rod Material",
-                                  style: textTheme.bodyMedium?.copyWith(
-                                    color: ColorsPalette.white,
-                                  ),
-                                ),
-                                Custemtextformfield(
-                                  validator: (value) {
-                                    return Validators.validator(value);
-                                  },
-                                  controller:
-                                      singleEarthRodCubit.rodMaterialController,
-                                  hintText: "Copper Bonded Steel",
-                                  obscureText: false,
-                                ),
-                              ],
-                            ),
-                          )
-                        : SummaryCard(
-                            soilResistivity: singleEarthRodCubit
-                                .soilResistivityController
-                                .text,
-                            rodLength:
-                                singleEarthRodCubit.rodLengthController.text,
-                            rodDiameter:
-                                singleEarthRodCubit.rodDiameterController.text,
-                            rodMaterial:
-                                singleEarthRodCubit.rodMaterialController.text,
+                                onPressed: () {
+                                  if (singleEarthRodCubit.formKey.currentState!
+                                      .validate()) {
+                                    singleEarthRodCubit
+                                        .calculateSingleRodResistance();
+                                  }
+                                },
+                              ),
+                            ],
                           ),
-                    SizedBox(height: 30),
-                    singleEarthRodCubit.singleRodResistance == null
-                        ? Customelevatedbutton(
-                            buttonText: "Calculate",
+                        ),
+                      )
+                    : Column(
+                        spacing: 10,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          SingleRodResultView(
+                            singleEarthRodCubit: singleEarthRodCubit,
+                          ),
+                          Customelevatedbutton(
+                            buttonText: "Save As Pdf & Continue",
                             backGroundColor: WidgetStatePropertyAll(
-                              ColorsPalette.mainOrange,
+                              ColorsPalette.buttonsOrange,
                             ),
                             onPressed: () {
-                              if (singleEarthRodCubit.formKey.currentState!
-                                  .validate()) {
-                                singleEarthRodCubit
-                                    .calculateSingleRodResistance();
-                              }
+                              context.read<ExportPdfCubit>().exportPdf(
+                                controller:
+                                    singleEarthRodCubit.screenshotController,
+                                context: context,
+                                screenContent: SingleRodResultView(
+                                  singleEarthRodCubit: singleEarthRodCubit,
+                                ),
+                                title: CalculationConstants.titles.keys
+                                    .toList()[1],
+                              );
                             },
-                          )
-                        : Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: ColorsPalette.bordersColor),
-                          borderRadius: BorderRadius.circular(16)
-                        ),
-                        child: Assets.images.singleResult.image()),
-                  ],
-                ),
-              ),
-            );
-          },
+                          ),
+                        ],
+                      );
+              },
+            ),
+          ),
         ),
       ),
     );

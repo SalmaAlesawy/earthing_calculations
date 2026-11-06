@@ -21,37 +21,40 @@ class Customelevatedbutton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
-    return ElevatedButton(
-      style: ButtonStyle(
-        side: WidgetStatePropertyAll(
-          BorderSide(color: borderColor ?? ColorsPalette.bordersColor),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        style: ButtonStyle(
+          side: WidgetStatePropertyAll(
+            BorderSide(color: borderColor ?? ColorsPalette.bordersColor),
+          ),
+          shadowColor: const WidgetStatePropertyAll(Colors.transparent),
+          overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+          backgroundColor: backGroundColor,
+          foregroundColor:
+              forGroundColor ?? WidgetStatePropertyAll(ColorsPalette.white),
+          textStyle: WidgetStatePropertyAll(
+            textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+          ),
+          padding: const WidgetStatePropertyAll(
+            EdgeInsets.symmetric(vertical: 20),
+          ),
+          shape: WidgetStatePropertyAll(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          ),
         ),
-        shadowColor: const WidgetStatePropertyAll(Colors.transparent),
-        overlayColor: const WidgetStatePropertyAll(Colors.transparent),
-        backgroundColor: backGroundColor,
-        foregroundColor:
-            forGroundColor ?? WidgetStatePropertyAll(ColorsPalette.white),
-        textStyle: WidgetStatePropertyAll(
-          textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
-        ),
-        padding: const WidgetStatePropertyAll(
-          EdgeInsets.symmetric(vertical: 20),
-        ),
-        shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        ),
+        onPressed: onPressed,
+        child: image == null
+            ? Text(buttonText)
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(image!, width: 24, height: 24),
+                  const SizedBox(width: 10),
+                  Text(buttonText),
+                ],
+              ),
       ),
-      onPressed: onPressed,
-      child: image == null
-          ? Text(buttonText)
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(image!, width: 24, height: 24),
-                const SizedBox(width: 10),
-                Text(buttonText),
-              ],
-            ),
     );
   }
 }

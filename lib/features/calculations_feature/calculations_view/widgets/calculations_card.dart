@@ -19,11 +19,11 @@ class CalculationsCard extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
     return ListTile(
       leading: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+        child: ClipRRect(
+          borderRadius: BorderRadiusGeometry.circular(10),
+          child: leading,
         ),
-        child: ClipRRect(borderRadius: BorderRadiusGeometry.circular(15),child: leading,),
       ),
       title: Text(
         title,

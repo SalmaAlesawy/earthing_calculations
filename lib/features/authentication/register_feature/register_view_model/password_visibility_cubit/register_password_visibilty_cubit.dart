@@ -1,9 +1,9 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'register_password_visibilty_state.dart';
 
-class RegisterPasswordVisibilityCubit extends Cubit<RegisterPasswordVisibilityState> {
+class RegisterPasswordVisibilityCubit
+    extends Cubit<RegisterPasswordVisibilityState> {
   RegisterPasswordVisibilityCubit() : super(RegisterPasswordVisibleState());
   bool registerPasswordVisibility = true;
   Future<void> registerVisibilityPassword() async {

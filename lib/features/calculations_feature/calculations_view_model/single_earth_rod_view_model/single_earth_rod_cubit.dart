@@ -1,27 +1,33 @@
 import 'dart:math';
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:screenshot/screenshot.dart';
 
 part 'single_earth_rod_state.dart';
 
 class SingleEarthRodCubit extends Cubit<SingleEarthRodState> {
   SingleEarthRodCubit() : super(SingleEarthRodInitial());
+  ScreenshotController screenshotController = ScreenshotController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController soilResistivityController = TextEditingController();
-  TextEditingController rodLengthController = TextEditingController();
-  TextEditingController rodDiameterController = TextEditingController();
-  TextEditingController rodMaterialController = TextEditingController();
+  Map<String, TextEditingController> singleRodControllers = {
+    "soil Resistivity": TextEditingController(),
+    "rod Length": TextEditingController(),
+    "rod Diameter": TextEditingController(),
+    "rod Material": TextEditingController(),
+  };
   double? singleRodResistance;
 
   void calculateSingleRodResistance() {
-    double? rho = double.tryParse(soilResistivityController.text);
-    double? length = double.tryParse(rodLengthController.text);
-    double? diameter = double.tryParse(rodDiameterController.text);
+    double? rho = double.tryParse(
+      singleRodControllers["soil Resistivity"]!.text,
+    );
+    double? length = double.tryParse(singleRodControllers["rod Length"]!.text);
+    double? diameter = double.tryParse(
+      singleRodControllers["rod Diameter"]!.text,
+    );
     singleRodResistance =
-        (rho! / (2 * pi * length!)) * (log(((8 * length) / diameter!))-1);
-    print(singleRodResistance);
+        (rho! / (2 * pi * length!)) * (log(((8 * length) / diameter!)) - 1);
     emit(CalculateSingleRodResistanceState());
   }
 }

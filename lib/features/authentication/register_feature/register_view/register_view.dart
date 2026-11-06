@@ -1,9 +1,10 @@
 import 'package:earthing_calc/core/gen/assets.gen.dart';
 import 'package:earthing_calc/core/routes/page_route_names.dart';
 import 'package:earthing_calc/core/theme/colors_palette.dart';
-import 'package:earthing_calc/core/widgets/custom_text_form_field.dart';
+import 'package:earthing_calc/core/validators/validators.dart';
 import 'package:earthing_calc/core/widgets/custom_elevated_button.dart';
 import 'package:earthing_calc/core/widgets/custom_text_button.dart';
+import 'package:earthing_calc/core/widgets/custom_text_form_field.dart';
 import 'package:earthing_calc/features/authentication/register_feature/register_view_model/password_confirm_visibility_cubit/register_password_confirm_cubit.dart';
 import 'package:earthing_calc/features/authentication/register_feature/register_view_model/password_visibility_cubit/register_password_visibilty_cubit.dart';
 import 'package:earthing_calc/features/authentication/register_feature/register_view_model/register_cubit/register_cubit.dart';
@@ -46,10 +47,24 @@ class RegisterView extends StatelessWidget {
                         RegisterPasswordConfirmVisibilityConfirmCubit(),
                   ),
                 ],
-                child: BlocBuilder<RegisterCubit, RegisterState>(
+                child: BlocConsumer<RegisterCubit, RegisterState>(
+                  listener: (context, state) {
+                    if (state is RegisterError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.errorMessage)),
+                      );
+                    }
+                    if (state is RegisterSuccess) {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        PageRouteNames.navigationScreen,
+                      );
+                    }
+                  },
                   builder: (context, state) {
                     RegisterCubit registerCubit = context.read<RegisterCubit>();
                     return Form(
+                      key: registerCubit.formKey,
                       child: Column(
                         spacing: 10,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -57,11 +72,17 @@ class RegisterView extends StatelessWidget {
                           Custemtextformfield(
                             controller: registerCubit.fullNameController,
                             hintText: "Full Name",
+                            validator: (value) {
+                              return Validators.validateName(value);
+                            },
                             obscureText: false,
                             prefixIcon: Icon(Icons.person_2_outlined),
                           ),
                           Custemtextformfield(
                             controller: registerCubit.emailController,
+                            validator: (value) {
+                              return Validators.validateEmail(value);
+                            },
                             hintText: "Email",
                             obscureText: false,
                             prefixIcon: Icon(Icons.email_outlined),
@@ -77,6 +98,9 @@ class RegisterView extends StatelessWidget {
                               return Custemtextformfield(
                                 controller: registerCubit.passwordController,
                                 hintText: "Password",
+                                validator: (value) {
+                                  return Validators.validatePassword(value);
+                                },
                                 obscureText: passwordVisibilityCubit
                                     .registerPasswordVisibility,
                                 prefixIcon: Icon(Icons.lock_outline),
@@ -108,6 +132,12 @@ class RegisterView extends StatelessWidget {
                                 controller:
                                     registerCubit.passwordConfirmController,
                                 hintText: "Confirm Password",
+                                validator: (value) {
+                                  return Validators.validateConfirmPassword(
+                                    value,
+                                    registerCubit.passwordController.text,
+                                  );
+                                },
                                 obscureText: passwordConfirmVisibilityCubit
                                     .confirmVisibility,
                                 prefixIcon: Icon(Icons.lock_outline),
@@ -126,12 +156,23 @@ class RegisterView extends StatelessWidget {
                             },
                           ),
                           SizedBox(height: 25),
-                          Customelevatedbutton(
-                            buttonText: "Create Account",
-                            backGroundColor: WidgetStatePropertyAll(
-                              ColorsPalette.buttonsOrange,
-                            ),
-                          ),
+                          state is RegisterLoading
+                              ? CircularProgressIndicator()
+                              : Customelevatedbutton(
+                                  buttonText: "Create Account",
+                                  backGroundColor: WidgetStatePropertyAll(
+                                    ColorsPalette.buttonsOrange,
+                                  ),
+                                  onPressed: () {
+                                    if (registerCubit.formKey.currentState!
+                                        .validate()) {
+                                      registerCubit.signupWithEmailAndPassword(
+                                        registerCubit.emailController.text,
+                                        registerCubit.passwordController.text,
+                                      );
+                                    }
+                                  },
+                                ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
