@@ -21,9 +21,9 @@ dependencies:
   flutter_svg: ^2.3.0
   flutter_bloc: ^9.1.1
   easy_stepper: ^1.2.0
-  firebase_core: ^4.15.2
-  cloud_firestore: 6.8.0
-  firebase_auth: 6.5.7
+  firebase_core: ^5.1.0
+  cloud_firestore: ^7.1.0
+  firebase_auth: ^7.0.1
   intl: ^0.20.3
   shared_preferences: ^2.5.5
   get_it: ^9.3.0
